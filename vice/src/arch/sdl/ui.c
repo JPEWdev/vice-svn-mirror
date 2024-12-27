@@ -536,6 +536,7 @@ void ui_message(const char* format, ...)
 /* uiapi.h */
 
 static int save_resources_on_exit;
+static int save_resources_on_menu_exit;
 static int confirm_on_exit;
 static int start_minimized;
 
@@ -548,6 +549,13 @@ static int set_ui_menukey(int val, void *param)
 static int set_save_resources_on_exit(int val, void *param)
 {
     save_resources_on_exit = val ? 1 : 0;
+
+    return 0;
+}
+
+static int set_save_resources_on_menu_exit(int val, void *param)
+{
+    save_resources_on_menu_exit = val ? 1 : 0;
 
     return 0;
 }
@@ -620,6 +628,8 @@ static resource_int_t resources_int[] = {
       &sdl_ui_menukeys[12], set_ui_menukey, (void *)MENU_ACTION_END },
     { "SaveResourcesOnExit", 0, RES_EVENT_NO, NULL,
       &save_resources_on_exit, set_save_resources_on_exit, NULL },
+    { "SaveResourcesOnSDLMenuExit", 0, RES_EVENT_NO, NULL,
+      &save_resources_on_menu_exit, set_save_resources_on_menu_exit, NULL },
     { "ConfirmOnExit", 0, RES_EVENT_NO, NULL,
       &confirm_on_exit, set_confirm_on_exit, NULL },
 #ifdef ALLOW_NATIVE_MONITOR

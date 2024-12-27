@@ -956,6 +956,7 @@ static void sdl_ui_trap(uint16_t addr, void *data)
 {
     unsigned int width;
     unsigned int height;
+    int save_on_exit;
     static char msg[0x40];
 
     DBG(("sdl_ui_trap start"));
@@ -979,6 +980,11 @@ static void sdl_ui_trap(uint16_t addr, void *data)
         /* called via hotkey */
         sdl_ui_init_draw_params(sdl_active_canvas);
         sdl_ui_menu_item_activate((ui_menu_entry_t *)data);
+    }
+
+    resources_get_int("SaveResourcesOnSDLMenuExit", &save_on_exit);
+    if (save_on_exit) {
+        resources_save(NULL);
     }
 
     if (machine_class == VICE_MACHINE_VSID) {
